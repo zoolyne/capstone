@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class shaderplanmovement : MonoBehaviour
+{
+
+    public Vector4 newPosition;
+    public Renderer rend;
+
+    void Start()
+    {
+        rend = GetComponent<Renderer>();
+        rend.material.shader = Shader.Find("CrossSection/OnePlaneBSP");//Gets the Shader
+
+    }
+
+    void Update()
+    {
+        newPosition = transform.position;
+        rend.material.SetVector("_PlanePosition", newPosition);
+    }
+}
