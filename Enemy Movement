@@ -4,33 +4,43 @@ using UnityEngine;
 
 public class enemyAI : MonoBehaviour
 {
+    //We define the variables we will use in the begining
     private Vector3 StartingPosition;
     private Vector3 RandomDirection;
     private Vector3 direction;
     private float time;
-
+    
+    //this function runs once, when the script is first called
     private void Start()
     {
+        //We define our starting position and direction on the first instance
         StartingPosition = transform.position;
         direction = GetRoamingPosition();
     }
-
+    
+    //This function will generate a normalized vector in a random direction for the enemy to move
     private Vector3 GetRoamingPosition()
     {
         RandomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
         return RandomDirection;
     } 
 
+    //This function will be called every frame
     void Update()
     {
+        //We move the model by a set step in the defined direction for each frame
         transform.position = transform.position + direction * Time.deltaTime * 2.0f;
         time += Time.deltaTime;
+        
+        //once we have moved in one direction for a certain amount of time, we will pick a new direction
         if (time >= 3.0f)
         {
             direction = GetRoamingPosition();
             time = 0.0f;
         }
-
+        
+        //to prevent the enemy from falling off the platform, if it gets too far away from its initial position 
+        //it will head back towards its starting point
         if (Vector3.Distance(transform.position, StartingPosition) >= 3.0f)
         {
             direction = (StartingPosition - transform.position).normalized;
