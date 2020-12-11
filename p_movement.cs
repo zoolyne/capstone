@@ -12,6 +12,7 @@ public class pMovement : MonoBehaviour
     public float speed = 6.0f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
+    public float minheightfordeath = -10.0f;
 
     private Vector3 moveDirection = Vector3.zero;
 
@@ -39,12 +40,29 @@ public class pMovement : MonoBehaviour
 
         characterController.Move(moveDirection * Time.deltaTime);
 
-        //Calls the main menu when the player presses the escape key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(0);
         }
 
+        if (transform.position.y < minheightfordeath)
+        {
+            SceneManager.LoadScene(0);
+        }
+            
+    }
+
+    void OnCollisionEnter(Collision somecollider)
+    {
+        if(somecollider.collider.tag == "Finish")
+        {
+            SceneManager.LoadScene("GameWon");
+        }
+
+        if(somecollider.collider.tag == "Enemy")
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
 
