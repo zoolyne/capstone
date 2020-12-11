@@ -5,12 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class endscreen : MonoBehaviour
 {
+    //quits the application when a button is clicked
     public void ExitGame()
     {
         Application.Quit();
         Debug.Log("You have quit the game");
     }
 
+    //reloads the game when the button is clicked
     public void PlayAgain()
     {
         SceneManager.LoadScene(1);
