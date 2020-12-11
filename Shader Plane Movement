@@ -10,6 +10,7 @@ public class shaderplanmovement : MonoBehaviour
 
     void Start()
     {
+        //we have to call on the object's shader at the start so that we can change the values of the shader
         rend = GetComponent<Renderer>();
         rend.material.shader = Shader.Find("CrossSection/OnePlaneBSP");//Gets the Shader
 
@@ -17,6 +18,7 @@ public class shaderplanmovement : MonoBehaviour
 
     void Update()
     {
+        //as the object moves we update the values of the shader vector that defines the cross-section's position
         newPosition = transform.position;
         rend.material.SetVector("_PlanePosition", newPosition);
     }
