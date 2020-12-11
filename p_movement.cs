@@ -1,10 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class p_movement : MonoBehaviour
+public class pMovement : MonoBehaviour
 {
     CharacterController characterController;
 
@@ -37,6 +38,12 @@ public class p_movement : MonoBehaviour
         moveDirection.y -= gravity * Time.deltaTime;
 
         characterController.Move(moveDirection * Time.deltaTime);
+
+        //Calls the main menu when the player presses the escape key
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
 
     }
 
