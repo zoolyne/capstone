@@ -5,17 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class mainmenu : MonoBehaviour
 {
+    //starts the game once the button is clicked
     public void PlayGame ()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    //exits the application when the button is clicked
     public void ExitGame ()
     {
         Application.Quit();
         Debug.Log("You have quit the game");
     }
 
+    //calls the menu if the escape key is pressed
     public void Update ()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
