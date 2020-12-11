@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class pMovement : MonoBehaviour
 {
+    //We define all of our variables in the beginning
     CharacterController characterController;
 
     public float speed = 6.0f;
@@ -18,33 +19,44 @@ public class pMovement : MonoBehaviour
 
     void Start()
     {
+        //this function gives us the input keys/axes for the player controlling the game
         characterController = GetComponent<CharacterController>();
 
     }
 
+    //we call this function for every frame
     void Update()
     {
-        if (characterController.isGrounded)
+        if (characterController.isGrounded) //this statement prevents us from controlling the character if it is not touching the ground
         {
 
+            //we define a directional vector based on the player input
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+            //we multiply the vector by the desired speed to get the velocity in that direction
             moveDirection *= speed;
-
+            
+            //this statement will allow for movement along the vertical axis
             if (Input.GetButton("Jump"))
             {
                 moveDirection.y = jumpSpeed;
             }
         }
-
+        
+        //we use newtonian mechanics to make the jumping feel realistic, where the player will have a force applied over time changing the velocity while they are in the air
         moveDirection.y -= gravity * Time.deltaTime;
 
+        //using our velocity vector we finally move the player according to the velocity vector for a short time step
         characterController.Move(moveDirection * Time.deltaTime);
 
+        
+        //loads the menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(0);
         }
-
+        
+        
+        //if the player falls off of the platform they will be brought back to the main menu
         if (transform.position.y < minheightfordeath)
         {
             SceneManager.LoadScene(0);
@@ -52,13 +64,15 @@ public class pMovement : MonoBehaviour
             
     }
 
+    //if the player hits the final wall, the ending screen will load
     void OnCollisionEnter(Collision somecollider)
     {
         if(somecollider.collider.tag == "Finish")
         {
             SceneManager.LoadScene("GameWon");
         }
-
+        
+        //if the player touches the enemy they will be brough back to the main menu
         if(somecollider.collider.tag == "Enemy")
         {
             SceneManager.LoadScene(0);
